@@ -1,20 +1,27 @@
-import React from 'react'
+let currentIndex = 0;
 
-function Home(){
-    const listItems =[1,2,3,4]
-
-    const addItem =() =>{
-        const variableA = 1;
-        const variableB = 3;
-        const variableC =2;
-        
-        return variableA*3 + variableC*variableB
+function showSlide(index) {
+    const slides = document.querySelectorAll('.carousel-item');
+    if (index >= slides.length) {
+        currentIndex = 0;
+    } else if (index < 0) {
+        currentIndex = slides.length - 1;
+    } else {
+        currentIndex = index;
     }
-    return(
-        <><div>Home</div>
-        <p>hola mundo</p>
-        <button onclick={addItem}/></>
-    )
+    const offset = -currentIndex * 100;
+    document.querySelector('.carousel-inner').style.transform = `translateX(${offset}%)`;
 }
 
-export default Home
+function moveSlide(step) {
+    showSlide(currentIndex + step);
+}
+
+// Optional: Auto-slide
+setInterval(() => {
+    moveSlide(1);
+}, 3000);
+
+document.addEventListener('DOMContentLoaded', () => {
+    showSlide(currentIndex);
+});
